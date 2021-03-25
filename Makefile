@@ -1,4 +1,4 @@
-IGNORED_FOLDER=.ignore
+COVERAGE_FILE=coverage.txt
 MODULE_NAME := $(shell go list -m)
 
 all: install lint build
@@ -14,11 +14,11 @@ build:
 	@go build ./...
 
 test:
-	@go test -count=1 ./...
+	@go test -count=1 -race -coverprofile=coverage.txt -covermode=atomic ./...
 
 .PHONY: lint
 lint:
-	golint ./...
+	golint -set_exit_status ./...
 
 .PHONY: mock
 mock:

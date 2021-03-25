@@ -21,8 +21,15 @@ jobs:
     - name: Install
       run: make install
 
+    - name: Test
+      run: make test
+
+    - name: Codecov
+      run: bash <(curl -s https://codecov.io/bash)
+
+    - name: Linter
+      run: make lint
+
     - name: Build
       run: make build
 
-    - name: Test
-      run: make test

@@ -10,7 +10,7 @@ import (
 
 // fakeTag to provide a unsupported Tag in test
 type fakeTag struct {
-	name string
+	Name string
 }
 
 func (f *fakeTag) Read(Reader) error        { return nil }
@@ -37,7 +37,7 @@ func TestNewTag(t *testing.T) {
 		}
 	})
 	t.Run("should be ok with tag Byte", func(t *testing.T) {
-		expectedTag := &ByteT{name: tagName}
+		expectedTag := &ByteT{Name: tagName}
 
 		tag, err := NewTag(TagByte, tagName)
 		if assert.NoError(t, err); err != nil {
@@ -45,7 +45,7 @@ func TestNewTag(t *testing.T) {
 		}
 	})
 	t.Run("should be ok with tag Short", func(t *testing.T) {
-		expectedTag := &ShortT{name: tagName}
+		expectedTag := &ShortT{Name: tagName}
 
 		tag, err := NewTag(TagShort, tagName)
 		if assert.NoError(t, err); err != nil {
@@ -53,7 +53,7 @@ func TestNewTag(t *testing.T) {
 		}
 	})
 	t.Run("should be ok with tag Int", func(t *testing.T) {
-		expectedTag := &IntT{name: tagName}
+		expectedTag := &IntT{Name: tagName}
 
 		tag, err := NewTag(TagInt, tagName)
 		if assert.NoError(t, err); err != nil {
@@ -61,7 +61,7 @@ func TestNewTag(t *testing.T) {
 		}
 	})
 	t.Run("should be ok with tag Long", func(t *testing.T) {
-		expectedTag := &LongT{name: tagName}
+		expectedTag := &LongT{Name: tagName}
 
 		tag, err := NewTag(TagLong, tagName)
 		if assert.NoError(t, err); err != nil {
@@ -69,7 +69,7 @@ func TestNewTag(t *testing.T) {
 		}
 	})
 	t.Run("should be ok with tag Float", func(t *testing.T) {
-		expectedTag := &FloatT{name: tagName}
+		expectedTag := &FloatT{Name: tagName}
 
 		tag, err := NewTag(TagFloat, tagName)
 		if assert.NoError(t, err); err != nil {
@@ -77,7 +77,7 @@ func TestNewTag(t *testing.T) {
 		}
 	})
 	t.Run("should be ok with tag Double", func(t *testing.T) {
-		expectedTag := &DoubleT{name: tagName}
+		expectedTag := &DoubleT{Name: tagName}
 
 		tag, err := NewTag(TagDouble, tagName)
 		if assert.NoError(t, err); err != nil {
@@ -85,7 +85,7 @@ func TestNewTag(t *testing.T) {
 		}
 	})
 	t.Run("should be ok with tag Byte array", func(t *testing.T) {
-		expectedTag := &ByteArrayT{name: tagName}
+		expectedTag := &ByteArrayT{Name: tagName}
 
 		tag, err := NewTag(TagByteArray, tagName)
 		if assert.NoError(t, err); err != nil {
@@ -93,7 +93,7 @@ func TestNewTag(t *testing.T) {
 		}
 	})
 	t.Run("should be ok with tag String", func(t *testing.T) {
-		expectedTag := &StringT{name: tagName}
+		expectedTag := &StringT{Name: tagName}
 
 		tag, err := NewTag(TagString, tagName)
 		if assert.NoError(t, err); err != nil {
@@ -101,7 +101,7 @@ func TestNewTag(t *testing.T) {
 		}
 	})
 	t.Run("should be ok with tag List", func(t *testing.T) {
-		expectedTag := &ListT{name: tagName}
+		expectedTag := &ListT{Name: tagName}
 
 		tag, err := NewTag(TagList, tagName)
 		if assert.NoError(t, err); err != nil {
@@ -109,7 +109,7 @@ func TestNewTag(t *testing.T) {
 		}
 	})
 	t.Run("should be ok with tag Compound", func(t *testing.T) {
-		expectedTag := &CompoundT{name: tagName}
+		expectedTag := &CompoundT{Name: tagName}
 
 		tag, err := NewTag(TagCompound, tagName)
 		if assert.NoError(t, err); err != nil {
@@ -117,7 +117,7 @@ func TestNewTag(t *testing.T) {
 		}
 	})
 	t.Run("should be ok with tag Int Array", func(t *testing.T) {
-		expectedTag := &IntArrayT{name: tagName}
+		expectedTag := &IntArrayT{Name: tagName}
 
 		tag, err := NewTag(TagIntArray, tagName)
 		if assert.NoError(t, err); err != nil {
@@ -125,7 +125,7 @@ func TestNewTag(t *testing.T) {
 		}
 	})
 	t.Run("should be ok with tag Long Array", func(t *testing.T) {
-		expectedTag := &LongArrayT{name: tagName}
+		expectedTag := &LongArrayT{Name: tagName}
 
 		tag, err := NewTag(TagLongArray, tagName)
 		if assert.NoError(t, err); err != nil {
@@ -267,7 +267,7 @@ func TestByteT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
@@ -277,7 +277,7 @@ func TestByteT_Read(t *testing.T) {
 		mreader.EXPECT().Byte().Return(byte('A'), nil)
 		err := tag.Read(mreader)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 }
@@ -299,7 +299,7 @@ func TestByteT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the call to writer.String failed", func(t *testing.T) {
-		tag := &ByteT{name: tagName}
+		tag := &ByteT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagByte)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(errors.New(expectedMockErr))
@@ -309,7 +309,7 @@ func TestByteT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the final writer call failed", func(t *testing.T) {
-		tag := &ByteT{name: tagName, value: byte('A')}
+		tag := &ByteT{Name: tagName, Value: byte('A')}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagByte)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -320,7 +320,7 @@ func TestByteT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
-		tag := &ByteT{name: tagName, value: byte('A')}
+		tag := &ByteT{Name: tagName, Value: byte('A')}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagByte)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -344,7 +344,7 @@ func TestShortT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
@@ -354,7 +354,7 @@ func TestShortT_Read(t *testing.T) {
 		mreader.EXPECT().Short().Return(int16(42), nil)
 		err := tag.Read(mreader)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 }
@@ -376,7 +376,7 @@ func TestShortT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the call to writer.String failed", func(t *testing.T) {
-		tag := &ShortT{name: tagName}
+		tag := &ShortT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagShort)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(errors.New(expectedMockErr))
@@ -386,7 +386,7 @@ func TestShortT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the final writer call failed", func(t *testing.T) {
-		tag := &ShortT{name: tagName, value: int16(42)}
+		tag := &ShortT{Name: tagName, Value: int16(42)}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagShort)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -397,7 +397,7 @@ func TestShortT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
-		tag := &ShortT{name: tagName, value: int16(42)}
+		tag := &ShortT{Name: tagName, Value: int16(42)}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagShort)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -421,7 +421,7 @@ func TestIntT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
@@ -431,7 +431,7 @@ func TestIntT_Read(t *testing.T) {
 		mreader.EXPECT().Int().Return(int32(42), nil)
 		err := tag.Read(mreader)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 }
@@ -453,7 +453,7 @@ func TestIntT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the call to writer.String failed", func(t *testing.T) {
-		tag := &IntT{name: tagName}
+		tag := &IntT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagInt)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(errors.New(expectedMockErr))
@@ -463,7 +463,7 @@ func TestIntT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the final writer call failed", func(t *testing.T) {
-		tag := &IntT{name: tagName, value: int32(42)}
+		tag := &IntT{Name: tagName, Value: int32(42)}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagInt)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -474,7 +474,7 @@ func TestIntT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
-		tag := &IntT{name: tagName, value: int32(42)}
+		tag := &IntT{Name: tagName, Value: int32(42)}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagInt)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -498,7 +498,7 @@ func TestLongT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
@@ -508,7 +508,7 @@ func TestLongT_Read(t *testing.T) {
 		mreader.EXPECT().Long().Return(int64(42), nil)
 		err := tag.Read(mreader)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 }
@@ -530,7 +530,7 @@ func TestLongT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the call to writer.String failed", func(t *testing.T) {
-		tag := &LongT{name: tagName}
+		tag := &LongT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagLong)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(errors.New(expectedMockErr))
@@ -540,7 +540,7 @@ func TestLongT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the final writer call failed", func(t *testing.T) {
-		tag := &LongT{name: tagName, value: int64(42)}
+		tag := &LongT{Name: tagName, Value: int64(42)}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagLong)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -551,7 +551,7 @@ func TestLongT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
-		tag := &LongT{name: tagName, value: int64(42)}
+		tag := &LongT{Name: tagName, Value: int64(42)}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagLong)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -575,7 +575,7 @@ func TestFloatT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
@@ -585,7 +585,7 @@ func TestFloatT_Read(t *testing.T) {
 		mreader.EXPECT().Float().Return(float32(42), nil)
 		err := tag.Read(mreader)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 }
@@ -607,7 +607,7 @@ func TestFloatT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the call to writer.String failed", func(t *testing.T) {
-		tag := &FloatT{name: tagName}
+		tag := &FloatT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagFloat)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(errors.New(expectedMockErr))
@@ -617,7 +617,7 @@ func TestFloatT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the final writer call failed", func(t *testing.T) {
-		tag := &FloatT{name: tagName, value: float32(42)}
+		tag := &FloatT{Name: tagName, Value: float32(42)}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagFloat)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -628,7 +628,7 @@ func TestFloatT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
-		tag := &FloatT{name: tagName, value: float32(42)}
+		tag := &FloatT{Name: tagName, Value: float32(42)}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagFloat)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -652,7 +652,7 @@ func TestDoubleT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
@@ -662,7 +662,7 @@ func TestDoubleT_Read(t *testing.T) {
 		mreader.EXPECT().Double().Return(float64(42), nil)
 		err := tag.Read(mreader)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 }
@@ -684,7 +684,7 @@ func TestDoubleT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the call to writer.String failed", func(t *testing.T) {
-		tag := &DoubleT{name: tagName}
+		tag := &DoubleT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagDouble)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(errors.New(expectedMockErr))
@@ -694,7 +694,7 @@ func TestDoubleT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the final writer call failed", func(t *testing.T) {
-		tag := &DoubleT{name: tagName, value: float64(42)}
+		tag := &DoubleT{Name: tagName, Value: float64(42)}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagDouble)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -705,7 +705,7 @@ func TestDoubleT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
-		tag := &DoubleT{name: tagName, value: float64(42)}
+		tag := &DoubleT{Name: tagName, Value: float64(42)}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagDouble)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -729,7 +729,7 @@ func TestByteArrayT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
@@ -739,7 +739,7 @@ func TestByteArrayT_Read(t *testing.T) {
 		mreader.EXPECT().Bytes().Return([]byte{0x0a, 0x0a}, nil)
 		err := tag.Read(mreader)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 }
@@ -761,7 +761,7 @@ func TestByteArrayT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the call to writer.String failed", func(t *testing.T) {
-		tag := &ByteArrayT{name: tagName}
+		tag := &ByteArrayT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagByteArray)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(errors.New(expectedMockErr))
@@ -771,7 +771,7 @@ func TestByteArrayT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the final writer call failed", func(t *testing.T) {
-		tag := &ByteArrayT{name: tagName, value: []byte{0x0a, 0x0}}
+		tag := &ByteArrayT{Name: tagName, Value: []byte{0x0a, 0x0}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagByteArray)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -782,7 +782,7 @@ func TestByteArrayT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
-		tag := &ByteArrayT{name: tagName, value: []byte{0x0a, 0x0}}
+		tag := &ByteArrayT{Name: tagName, Value: []byte{0x0a, 0x0}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagByteArray)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -806,7 +806,7 @@ func TestStringT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
@@ -816,7 +816,7 @@ func TestStringT_Read(t *testing.T) {
 		mreader.EXPECT().String().Return("Hello world !", nil)
 		err := tag.Read(mreader)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 }
@@ -838,7 +838,7 @@ func TestStringT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the call to writer.String failed", func(t *testing.T) {
-		tag := &StringT{name: tagName}
+		tag := &StringT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagString)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(errors.New(expectedMockErr))
@@ -848,7 +848,7 @@ func TestStringT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the final writer call failed", func(t *testing.T) {
-		tag := &StringT{name: tagName, value: "Hello World !"}
+		tag := &StringT{Name: tagName, Value: "Hello World !"}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagString)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -859,7 +859,7 @@ func TestStringT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
-		tag := &StringT{name: tagName, value: "Hello World !"}
+		tag := &StringT{Name: tagName, Value: "Hello World !"}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagString)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -882,7 +882,7 @@ func TestListT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.Empty(t, tag.value)
+			assert.Empty(t, tag.Value)
 		}
 	})
 	t.Run("Should return an error because the reader.Int() failed", func(t *testing.T) {
@@ -893,7 +893,7 @@ func TestListT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.Empty(t, tag.value)
+			assert.Empty(t, tag.Value)
 		}
 	})
 	t.Run("Should return an error because NewTag() failed", func(t *testing.T) {
@@ -904,7 +904,7 @@ func TestListT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, errorTag, err.Error())
-			assert.Empty(t, tag.value)
+			assert.Empty(t, tag.Value)
 		}
 	})
 	t.Run("Should return an error because elem.Read() failed", func(t *testing.T) {
@@ -916,12 +916,12 @@ func TestListT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.Empty(t, tag.value)
+			assert.Empty(t, tag.Value)
 		}
 	})
 	t.Run("Should be ok with a complete list", func(t *testing.T) {
 		tag := &ListT{}
-		expectedValue := []interface{}{&StringT{value: "coucou"}, &StringT{value: "Hello"}, &StringT{value: "Yo"}}
+		expectedValue := []interface{}{&StringT{Value: "coucou"}, &StringT{Value: "Hello"}, &StringT{Value: "Yo"}}
 
 		mreader.EXPECT().Byte().Return(byte(TagString), nil)
 		mreader.EXPECT().Int().Return(int32(3), nil)
@@ -930,7 +930,7 @@ func TestListT_Read(t *testing.T) {
 		mreader.EXPECT().String().Return("Yo", nil).Times(1)
 		err := tag.Read(mreader)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 }
@@ -952,7 +952,7 @@ func TestListT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the call to writer.String failed", func(t *testing.T) {
-		tag := &ListT{name: tagName}
+		tag := &ListT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagList)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(errors.New(expectedMockErr))
@@ -962,7 +962,7 @@ func TestListT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the type list is not supported", func(t *testing.T) {
-		tag := &ListT{name: tagName, value: []interface{}{"primitive", "type", "not", "supported", "without", "tagparent type"}}
+		tag := &ListT{Name: tagName, Value: []interface{}{"primitive", "type", "not", "supported", "without", "tagparent type"}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagList)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -972,7 +972,7 @@ func TestListT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because TagType function return an error", func(t *testing.T) {
-		tag := &ListT{name: tagName, value: []interface{}{&fakeTag{name: "fake_type"}}}
+		tag := &ListT{Name: tagName, Value: []interface{}{&fakeTag{Name: "fake_type"}}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagList)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -982,7 +982,7 @@ func TestListT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because second call to writer.Byte() failed", func(t *testing.T) {
-		tag := &ListT{name: tagName, value: []interface{}{&StringT{value: "coucou"}, &StringT{value: "Hello"}, &StringT{value: "Yo"}}}
+		tag := &ListT{Name: tagName, Value: []interface{}{&StringT{Value: "coucou"}, &StringT{Value: "Hello"}, &StringT{Value: "Yo"}}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagList)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -993,7 +993,7 @@ func TestListT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because second call to writer.Int() failed", func(t *testing.T) {
-		tag := &ListT{name: tagName, value: []interface{}{&StringT{value: "coucou"}, &StringT{value: "Hello"}, &StringT{value: "Yo"}}}
+		tag := &ListT{Name: tagName, Value: []interface{}{&StringT{Value: "coucou"}, &StringT{Value: "Hello"}, &StringT{Value: "Yo"}}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagList)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -1005,7 +1005,7 @@ func TestListT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because embeded elements Writer failed", func(t *testing.T) {
-		tag := &ListT{name: tagName, value: []interface{}{&StringT{value: "coucou"}, &StringT{value: "Hello"}, &StringT{value: "Yo"}}}
+		tag := &ListT{Name: tagName, Value: []interface{}{&StringT{Value: "coucou"}, &StringT{Value: "Hello"}, &StringT{Value: "Yo"}}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagList)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -1019,7 +1019,7 @@ func TestListT_Write(t *testing.T) {
 	})
 
 	t.Run("Should be ok", func(t *testing.T) {
-		tag := &ListT{name: tagName, value: []interface{}{&StringT{value: "coucou"}, &StringT{value: "Hello"}, &StringT{value: "Yo"}}}
+		tag := &ListT{Name: tagName, Value: []interface{}{&StringT{Value: "coucou"}, &StringT{Value: "Hello"}, &StringT{Value: "Yo"}}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagList)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -1032,7 +1032,7 @@ func TestListT_Write(t *testing.T) {
 		assert.NoError(t, err)
 	})
 	t.Run("Should be ok with an empty list", func(t *testing.T) {
-		tag := &ListT{name: tagName, value: []interface{}{}}
+		tag := &ListT{Name: tagName, Value: []interface{}{}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagList)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -1057,7 +1057,7 @@ func TestCompoundT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 
@@ -1070,7 +1070,7 @@ func TestCompoundT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should return an error becaue NewTag failed", func(t *testing.T) {
@@ -1082,7 +1082,7 @@ func TestCompoundT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, errorTag, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should return an error becaue elem.Read failed", func(t *testing.T) {
@@ -1095,7 +1095,7 @@ func TestCompoundT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok with an empty list", func(t *testing.T) {
@@ -1105,14 +1105,14 @@ func TestCompoundT_Read(t *testing.T) {
 		mreader.EXPECT().Byte().Return(byte(TagEnd), nil)
 		err := tag.Read(mreader)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
 		tag := &CompoundT{}
 		expectedValue := map[string]interface{}{
-			"tag_name1": &StringT{name: "tag_name1", value: "coucou1"},
-			"tag_name2": &StringT{name: "tag_name2", value: "coucou2"},
+			"tag_name1": &StringT{Name: "tag_name1", Value: "coucou1"},
+			"tag_name2": &StringT{Name: "tag_name2", Value: "coucou2"},
 		}
 
 		mreader.EXPECT().Byte().Return(byte(TagString), nil)
@@ -1124,7 +1124,7 @@ func TestCompoundT_Read(t *testing.T) {
 		mreader.EXPECT().Byte().Return(byte(TagEnd), nil)
 		err := tag.Read(mreader)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 
@@ -1147,7 +1147,7 @@ func TestCompoundT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the call to writer.String failed", func(t *testing.T) {
-		tag := &CompoundT{name: tagName}
+		tag := &CompoundT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagCompound)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(errors.New(expectedMockErr))
@@ -1157,7 +1157,7 @@ func TestCompoundT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the content value is not a tag", func(t *testing.T) {
-		tag := &CompoundT{name: tagName, value: map[string]interface{}{
+		tag := &CompoundT{Name: tagName, Value: map[string]interface{}{
 			"tag_name1": "hello"},
 		}
 
@@ -1169,8 +1169,8 @@ func TestCompoundT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the content value is tag unsuported", func(t *testing.T) {
-		tag := &CompoundT{name: tagName, value: map[string]interface{}{
-			"tag_name1": &fakeTag{name: "tag_name1"}},
+		tag := &CompoundT{Name: tagName, Value: map[string]interface{}{
+			"tag_name1": &fakeTag{Name: "tag_name1"}},
 		}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagCompound)).Return(nil)
@@ -1181,8 +1181,8 @@ func TestCompoundT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the writer tag type by writer.Byte() call failed", func(t *testing.T) {
-		tag := &CompoundT{name: tagName, value: map[string]interface{}{
-			"tag_name1": &StringT{name: "tag_name1", value: "coucou1"},
+		tag := &CompoundT{Name: tagName, Value: map[string]interface{}{
+			"tag_name1": &StringT{Name: "tag_name1", Value: "coucou1"},
 		}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagCompound)).Return(nil)
@@ -1194,8 +1194,8 @@ func TestCompoundT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the writer key by writer.String() call failed", func(t *testing.T) {
-		tag := &CompoundT{name: tagName, value: map[string]interface{}{
-			"tag_name1": &StringT{name: "tag_name1", value: "coucou1"},
+		tag := &CompoundT{Name: tagName, Value: map[string]interface{}{
+			"tag_name1": &StringT{Name: "tag_name1", Value: "coucou1"},
 		}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagCompound)).Return(nil)
@@ -1208,8 +1208,8 @@ func TestCompoundT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the elem.Writer() call failed", func(t *testing.T) {
-		tag := &CompoundT{name: tagName, value: map[string]interface{}{
-			"tag_name1": &StringT{name: "tag_name1", value: "coucou1"},
+		tag := &CompoundT{Name: tagName, Value: map[string]interface{}{
+			"tag_name1": &StringT{Name: "tag_name1", Value: "coucou1"},
 		}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagCompound)).Return(nil)
@@ -1224,8 +1224,8 @@ func TestCompoundT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the write.Byte() to TagEnd failed", func(t *testing.T) {
-		tag := &CompoundT{name: tagName, value: map[string]interface{}{
-			"tag_name1": &StringT{name: "tag_name1", value: "coucou1"},
+		tag := &CompoundT{Name: tagName, Value: map[string]interface{}{
+			"tag_name1": &StringT{Name: "tag_name1", Value: "coucou1"},
 		}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagCompound)).Return(nil)
@@ -1245,8 +1245,8 @@ func TestCompoundT_Write(t *testing.T) {
 	})
 
 	t.Run("Should be ok", func(t *testing.T) {
-		tag := &CompoundT{name: tagName, value: map[string]interface{}{
-			"tag_name1": &StringT{name: "tag_name1", value: "coucou1"},
+		tag := &CompoundT{Name: tagName, Value: map[string]interface{}{
+			"tag_name1": &StringT{Name: "tag_name1", Value: "coucou1"},
 		}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagCompound)).Return(nil)
@@ -1263,7 +1263,7 @@ func TestCompoundT_Write(t *testing.T) {
 		assert.NoError(t, err)
 	})
 	t.Run("Should be ok with an empty value", func(t *testing.T) {
-		tag := &CompoundT{name: tagName, value: map[string]interface{}{}}
+		tag := &CompoundT{Name: tagName, Value: map[string]interface{}{}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagCompound)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -1290,7 +1290,7 @@ func TestIntArrayT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
@@ -1300,7 +1300,7 @@ func TestIntArrayT_Read(t *testing.T) {
 		mreader.EXPECT().IntArray().Return([]int32{11, 42, 59}, nil)
 		err := tag.Read(mreader)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 }
@@ -1322,7 +1322,7 @@ func TestIntArrayT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the call to writer.String failed", func(t *testing.T) {
-		tag := &IntArrayT{name: tagName}
+		tag := &IntArrayT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagIntArray)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(errors.New(expectedMockErr))
@@ -1332,7 +1332,7 @@ func TestIntArrayT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the first call to writer.Int failed", func(t *testing.T) {
-		tag := &IntArrayT{name: tagName}
+		tag := &IntArrayT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagIntArray)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -1343,7 +1343,7 @@ func TestIntArrayT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the second call to writer.Int failed", func(t *testing.T) {
-		tag := &IntArrayT{name: tagName, value: []int32{42}}
+		tag := &IntArrayT{Name: tagName, Value: []int32{42}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagIntArray)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -1355,7 +1355,7 @@ func TestIntArrayT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
-		tag := &IntArrayT{name: tagName, value: []int32{42, 3, 33}}
+		tag := &IntArrayT{Name: tagName, Value: []int32{42, 3, 33}}
 		expectedValue := []int32{42, 3, 33}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagIntArray)).Return(nil)
@@ -1366,11 +1366,11 @@ func TestIntArrayT_Write(t *testing.T) {
 		mwriter.EXPECT().Int(gomock.Eq(int32(33))).Return(nil)
 		err := tag.Write(mwriter, true)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok with empty list", func(t *testing.T) {
-		tag := &IntArrayT{name: tagName, value: []int32{}}
+		tag := &IntArrayT{Name: tagName, Value: []int32{}}
 		expectedValue := []int32{}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagIntArray)).Return(nil)
@@ -1378,7 +1378,7 @@ func TestIntArrayT_Write(t *testing.T) {
 		mwriter.EXPECT().Int(gomock.Eq(int32(0))).Return(nil)
 		err := tag.Write(mwriter, true)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 }
@@ -1397,7 +1397,7 @@ func TestLongArrayT_Read(t *testing.T) {
 		err := tag.Read(mreader)
 		if assert.Error(t, err) {
 			assert.EqualValues(t, expectedMockErr, err.Error())
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
@@ -1407,7 +1407,7 @@ func TestLongArrayT_Read(t *testing.T) {
 		mreader.EXPECT().LongArray().Return([]int64{11, 42, 59}, nil)
 		err := tag.Read(mreader)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 }
@@ -1429,7 +1429,7 @@ func TestLongArrayT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the call to writer.String failed", func(t *testing.T) {
-		tag := &LongArrayT{name: tagName}
+		tag := &LongArrayT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagLongArray)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(errors.New(expectedMockErr))
@@ -1439,7 +1439,7 @@ func TestLongArrayT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the first call to writer.Int failed", func(t *testing.T) {
-		tag := &LongArrayT{name: tagName}
+		tag := &LongArrayT{Name: tagName}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagLongArray)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -1450,7 +1450,7 @@ func TestLongArrayT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should return an error because the second call to writer.Int failed", func(t *testing.T) {
-		tag := &LongArrayT{name: tagName, value: []int64{42}}
+		tag := &LongArrayT{Name: tagName, Value: []int64{42}}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagLongArray)).Return(nil)
 		mwriter.EXPECT().String(gomock.Eq(tagName)).Return(nil)
@@ -1462,7 +1462,7 @@ func TestLongArrayT_Write(t *testing.T) {
 		}
 	})
 	t.Run("Should be ok", func(t *testing.T) {
-		tag := &LongArrayT{name: tagName, value: []int64{42, 3, 33}}
+		tag := &LongArrayT{Name: tagName, Value: []int64{42, 3, 33}}
 		expectedValue := []int64{42, 3, 33}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagLongArray)).Return(nil)
@@ -1473,11 +1473,11 @@ func TestLongArrayT_Write(t *testing.T) {
 		mwriter.EXPECT().Long(gomock.Eq(int64(33))).Return(nil)
 		err := tag.Write(mwriter, true)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
 	t.Run("Should be ok with empty list", func(t *testing.T) {
-		tag := &LongArrayT{name: tagName, value: []int64{}}
+		tag := &LongArrayT{Name: tagName, Value: []int64{}}
 		expectedValue := []int64{}
 
 		mwriter.EXPECT().Byte(gomock.Eq(TagLongArray)).Return(nil)
@@ -1485,8 +1485,7 @@ func TestLongArrayT_Write(t *testing.T) {
 		mwriter.EXPECT().Long(gomock.Eq(int64(0))).Return(nil)
 		err := tag.Write(mwriter, true)
 		if assert.NoError(t, err) {
-			assert.EqualValues(t, expectedValue, tag.value)
+			assert.EqualValues(t, expectedValue, tag.Value)
 		}
 	})
-
 }

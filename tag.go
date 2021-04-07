@@ -33,29 +33,29 @@ func NewTag(tagT byte, name string) (Tag, error) {
 	case TagEnd:
 		return nil, errors.New(errorEnd)
 	case TagByte:
-		return &ByteT{name: name}, nil
+		return &ByteT{Name: name}, nil
 	case TagShort:
-		return &ShortT{name: name}, nil
+		return &ShortT{Name: name}, nil
 	case TagInt:
-		return &IntT{name: name}, nil
+		return &IntT{Name: name}, nil
 	case TagLong:
-		return &LongT{name: name}, nil
+		return &LongT{Name: name}, nil
 	case TagFloat:
-		return &FloatT{name: name}, nil
+		return &FloatT{Name: name}, nil
 	case TagDouble:
-		return &DoubleT{name: name}, nil
+		return &DoubleT{Name: name}, nil
 	case TagByteArray:
-		return &ByteArrayT{name: name}, nil
+		return &ByteArrayT{Name: name}, nil
 	case TagString:
-		return &StringT{name: name}, nil
+		return &StringT{Name: name}, nil
 	case TagList:
-		return &ListT{name: name}, nil
+		return &ListT{Name: name}, nil
 	case TagCompound:
-		return &CompoundT{name: name}, nil
+		return &CompoundT{Name: name}, nil
 	case TagIntArray:
-		return &IntArrayT{name: name}, nil
+		return &IntArrayT{Name: name}, nil
 	case TagLongArray:
-		return &LongArrayT{name: name}, nil
+		return &LongArrayT{Name: name}, nil
 	default:
 		return nil, errors.New(errorTag)
 	}
@@ -98,74 +98,74 @@ type EndT int
 
 // ByteT to byte type: 1
 type ByteT struct {
-	name  string
-	value byte
+	Name  string
+	Value byte
 }
 
 // ShortT to short type: 2
 type ShortT struct {
-	name  string
-	value int16
+	Name  string
+	Value int16
 }
 
 // IntT to int type: 3
 type IntT struct {
-	name  string
-	value int32
+	Name  string
+	Value int32
 }
 
 // LongT to long type: 4
 type LongT struct {
-	name  string
-	value int64
+	Name  string
+	Value int64
 }
 
 // FloatT to float type: 5
 type FloatT struct {
-	name  string
-	value float32
+	Name  string
+	Value float32
 }
 
 // DoubleT to double type: 6
 type DoubleT struct {
-	name  string
-	value float64
+	Name  string
+	Value float64
 }
 
 // ByteArrayT to byte array type: 7
 type ByteArrayT struct {
-	name  string
-	value []byte
+	Name  string
+	Value []byte
 }
 
 // StringT to string type: 8
 type StringT struct {
-	name  string
-	value string
+	Name  string
+	Value string
 }
 
 // ListT to list type: 9
 type ListT struct {
-	name  string
-	value []interface{}
+	Name  string
+	Value []interface{}
 }
 
 // CompoundT to compound type: 10
 type CompoundT struct {
-	name  string
-	value map[string]interface{}
+	Name  string
+	Value map[string]interface{}
 }
 
 // IntArrayT to int array type: 11
 type IntArrayT struct {
-	name  string
-	value []int32
+	Name  string
+	Value []int32
 }
 
 // LongArrayT to long array type: 12
 type LongArrayT struct {
-	name  string
-	value []int64
+	Name  string
+	Value []int64
 }
 
 // 1 		TAG_Byte 	1 byte / 8 bits, signed 	<number>b or <number>B 	A signed integral type. Sometimes used for booleans. 	Full range of -(27) to (27 - 1)
@@ -173,7 +173,7 @@ type LongArrayT struct {
 func (t *ByteT) Read(reader Reader) error {
 	var err error
 
-	if t.value, err = reader.Byte(); err != nil {
+	if t.Value, err = reader.Byte(); err != nil {
 		return err
 	}
 	return nil
@@ -186,11 +186,11 @@ func (t *ByteT) Write(writer Writer, printInfo bool) error {
 		if err = writer.Byte(TagByte); err != nil {
 			return err
 		}
-		if err = writer.String(t.name); err != nil {
+		if err = writer.String(t.Name); err != nil {
 			return err
 		}
 	}
-	if err = writer.Byte(t.value); err != nil {
+	if err = writer.Byte(t.Value); err != nil {
 		return err
 	}
 	return nil
@@ -201,7 +201,7 @@ func (t *ByteT) Write(writer Writer, printInfo bool) error {
 func (t *ShortT) Read(reader Reader) error {
 	var err error
 
-	if t.value, err = reader.Short(); err != nil {
+	if t.Value, err = reader.Short(); err != nil {
 		return err
 	}
 	return nil
@@ -214,11 +214,11 @@ func (t *ShortT) Write(writer Writer, printInfo bool) error {
 		if err = writer.Byte(TagShort); err != nil {
 			return err
 		}
-		if err = writer.String(t.name); err != nil {
+		if err = writer.String(t.Name); err != nil {
 			return err
 		}
 	}
-	if err = writer.Short(t.value); err != nil {
+	if err = writer.Short(t.Value); err != nil {
 		return err
 	}
 	return nil
@@ -229,7 +229,7 @@ func (t *ShortT) Write(writer Writer, printInfo bool) error {
 func (t *IntT) Read(reader Reader) error {
 	var err error
 
-	if t.value, err = reader.Int(); err != nil {
+	if t.Value, err = reader.Int(); err != nil {
 		return err
 	}
 	return nil
@@ -242,11 +242,11 @@ func (t *IntT) Write(writer Writer, printInfo bool) error {
 		if err = writer.Byte(TagInt); err != nil {
 			return err
 		}
-		if err = writer.String(t.name); err != nil {
+		if err = writer.String(t.Name); err != nil {
 			return err
 		}
 	}
-	if err = writer.Int(t.value); err != nil {
+	if err = writer.Int(t.Value); err != nil {
 		return err
 	}
 	return nil
@@ -257,7 +257,7 @@ func (t *IntT) Write(writer Writer, printInfo bool) error {
 func (t *LongT) Read(reader Reader) error {
 	var err error
 
-	if t.value, err = reader.Long(); err != nil {
+	if t.Value, err = reader.Long(); err != nil {
 		return err
 	}
 	return nil
@@ -270,11 +270,11 @@ func (t *LongT) Write(writer Writer, printInfo bool) error {
 		if err = writer.Byte(TagLong); err != nil {
 			return err
 		}
-		if err = writer.String(t.name); err != nil {
+		if err = writer.String(t.Name); err != nil {
 			return err
 		}
 	}
-	if err = writer.Long(t.value); err != nil {
+	if err = writer.Long(t.Value); err != nil {
 		return err
 	}
 	return nil
@@ -285,7 +285,7 @@ func (t *LongT) Write(writer Writer, printInfo bool) error {
 func (t *FloatT) Read(reader Reader) error {
 	var err error
 
-	if t.value, err = reader.Float(); err != nil {
+	if t.Value, err = reader.Float(); err != nil {
 		return err
 	}
 	return nil
@@ -298,11 +298,11 @@ func (t *FloatT) Write(writer Writer, printInfo bool) error {
 		if err = writer.Byte(TagFloat); err != nil {
 			return err
 		}
-		if err = writer.String(t.name); err != nil {
+		if err = writer.String(t.Name); err != nil {
 			return err
 		}
 	}
-	if err = writer.Float(t.value); err != nil {
+	if err = writer.Float(t.Value); err != nil {
 		return err
 	}
 	return nil
@@ -313,7 +313,7 @@ func (t *FloatT) Write(writer Writer, printInfo bool) error {
 func (t *DoubleT) Read(reader Reader) error {
 	var err error
 
-	if t.value, err = reader.Double(); err != nil {
+	if t.Value, err = reader.Double(); err != nil {
 		return err
 	}
 	return nil
@@ -326,11 +326,11 @@ func (t *DoubleT) Write(writer Writer, printInfo bool) error {
 		if err = writer.Byte(TagDouble); err != nil {
 			return err
 		}
-		if err = writer.String(t.name); err != nil {
+		if err = writer.String(t.Name); err != nil {
 			return err
 		}
 	}
-	if err = writer.Double(t.value); err != nil {
+	if err = writer.Double(t.Value); err != nil {
 		return err
 	}
 	return nil
@@ -340,7 +340,7 @@ func (t *DoubleT) Write(writer Writer, printInfo bool) error {
 func (t *ByteArrayT) Read(reader Reader) error {
 	var err error
 
-	if t.value, err = reader.Bytes(); err != nil {
+	if t.Value, err = reader.Bytes(); err != nil {
 		return err
 	}
 	return nil
@@ -353,11 +353,11 @@ func (t *ByteArrayT) Write(writer Writer, printInfo bool) error {
 		if err = writer.Byte(TagByteArray); err != nil {
 			return err
 		}
-		if err = writer.String(t.name); err != nil {
+		if err = writer.String(t.Name); err != nil {
 			return err
 		}
 	}
-	if err = writer.Bytes(t.value); err != nil {
+	if err = writer.Bytes(t.Value); err != nil {
 		return err
 	}
 	return nil
@@ -367,7 +367,7 @@ func (t *ByteArrayT) Write(writer Writer, printInfo bool) error {
 func (t *StringT) Read(reader Reader) error {
 	var err error
 
-	if t.value, err = reader.String(); err != nil {
+	if t.Value, err = reader.String(); err != nil {
 		return err
 	}
 	return nil
@@ -380,11 +380,11 @@ func (t *StringT) Write(writer Writer, printInfo bool) error {
 		if err = writer.Byte(TagString); err != nil {
 			return err
 		}
-		if err = writer.String(t.name); err != nil {
+		if err = writer.String(t.Name); err != nil {
 			return err
 		}
 	}
-	if err = writer.String(t.value); err != nil {
+	if err = writer.String(t.Value); err != nil {
 		return err
 	}
 	return nil
@@ -413,7 +413,7 @@ func (t *ListT) Read(reader Reader) error {
 		if err = elem.Read(reader); err != nil {
 			return err
 		}
-		t.value = append(t.value, elem)
+		t.Value = append(t.Value, elem)
 	}
 	return nil
 }
@@ -427,17 +427,17 @@ func (t *ListT) Write(writer Writer, printInfo bool) error {
 		if err = writer.Byte(TagList); err != nil {
 			return err
 		}
-		if err = writer.String(t.name); err != nil {
+		if err = writer.String(t.Name); err != nil {
 			return err
 		}
 	}
 
-	nbr = int32(len(t.value))
+	nbr = int32(len(t.Value))
 	if nbr > 0 {
-		if _, ok := t.value[0].(Tag); !ok {
+		if _, ok := t.Value[0].(Tag); !ok {
 			return errors.New(errorTag)
 		}
-		if tagT, err = TagType(t.value[0].(Tag)); err != nil {
+		if tagT, err = TagType(t.Value[0].(Tag)); err != nil {
 			return err
 		}
 	}
@@ -448,7 +448,7 @@ func (t *ListT) Write(writer Writer, printInfo bool) error {
 		return err
 	}
 
-	for _, t := range t.value {
+	for _, t := range t.Value {
 		if err = t.(Tag).Write(writer, false); err != nil {
 			return err
 		}
@@ -462,7 +462,7 @@ func (t *CompoundT) Read(reader Reader) error {
 	var tagT byte
 	var name string
 
-	t.value = make(map[string]interface{})
+	t.Value = make(map[string]interface{})
 	for tagT, err = reader.Byte(); tagT != TagEnd && err == nil; tagT, err = reader.Byte() {
 		if name, err = reader.String(); err != nil {
 			return err
@@ -474,7 +474,7 @@ func (t *CompoundT) Read(reader Reader) error {
 		if err = elem.Read(reader); err != nil {
 			return err
 		}
-		t.value[name] = elem
+		t.Value[name] = elem
 	}
 	if err != nil {
 		return err
@@ -489,11 +489,11 @@ func (t *CompoundT) Write(writer Writer, printInfo bool) error {
 		if err = writer.Byte(TagCompound); err != nil {
 			return err
 		}
-		if err = writer.String(t.name); err != nil {
+		if err = writer.String(t.Name); err != nil {
 			return err
 		}
 	}
-	for key, value := range t.value {
+	for key, value := range t.Value {
 		var tagT byte
 
 		if _, ok := value.(Tag); !ok {
@@ -522,7 +522,7 @@ func (t *CompoundT) Write(writer Writer, printInfo bool) error {
 func (t *IntArrayT) Read(reader Reader) error {
 	var err error
 
-	if t.value, err = reader.IntArray(); err != nil {
+	if t.Value, err = reader.IntArray(); err != nil {
 		return err
 	}
 	return nil
@@ -535,14 +535,14 @@ func (t *IntArrayT) Write(writer Writer, printInfo bool) error {
 		if err = writer.Byte(TagIntArray); err != nil {
 			return err
 		}
-		if err = writer.String(t.name); err != nil {
+		if err = writer.String(t.Name); err != nil {
 			return err
 		}
 	}
-	if err = writer.Int(int32(len(t.value))); err != nil {
+	if err = writer.Int(int32(len(t.Value))); err != nil {
 		return err
 	}
-	for _, v := range t.value {
+	for _, v := range t.Value {
 		if err = writer.Int(v); err != nil {
 			return err
 		}
@@ -554,7 +554,7 @@ func (t *IntArrayT) Write(writer Writer, printInfo bool) error {
 func (t *LongArrayT) Read(reader Reader) error {
 	var err error
 
-	if t.value, err = reader.LongArray(); err != nil {
+	if t.Value, err = reader.LongArray(); err != nil {
 		return err
 	}
 	return nil
@@ -567,14 +567,14 @@ func (t *LongArrayT) Write(writer Writer, printInfo bool) error {
 		if err = writer.Byte(TagLongArray); err != nil {
 			return err
 		}
-		if err = writer.String(t.name); err != nil {
+		if err = writer.String(t.Name); err != nil {
 			return err
 		}
 	}
-	if err = writer.Long(int64(len(t.value))); err != nil {
+	if err = writer.Long(int64(len(t.Value))); err != nil {
 		return err
 	}
-	for _, v := range t.value {
+	for _, v := range t.Value {
 		if err = writer.Long(v); err != nil {
 			return err
 		}
